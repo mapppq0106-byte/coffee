@@ -1,0 +1,127 @@
+/* * SIDEBAR STYLES (Dùng chung cho toàn bộ hệ thống)
+ * Màu chủ đạo: Nâu Cà Phê (#6f4e37)
+ */
+
+:root {
+    --sidebar-width: 250px;
+    --sidebar-bg: linear-gradient(180deg, #6f4e37 10%, #5a3e2b 100%); /* Nâu cà phê */
+    --sidebar-text: #fff;
+    --sidebar-active-bg: rgba(255, 255, 255, 0.25);
+    --sidebar-hover-bg: rgba(255, 255, 255, 0.15);
+    --sidebar-border-active: #d4a373; /* Màu kem/vàng nhạt */
+}
+
+#sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all 0.3s;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+}
+
+/* Trạng thái thu gọn (Khi bấm nút Toggle) */
+#sidebar.active {
+    margin-left: calc(var(--sidebar-width) * -1);
+}
+
+/* --- HEADER (CHỨA LOGO) --- */
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Style cho ảnh Logo (nếu dùng ảnh) */
+.sidebar-brand-img {
+    max-width: 100%;
+    height: 50px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* --- MENU ITEMS --- */
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-grow: 1;
+    overflow-y: auto; /* Cho phép cuộn nếu menu quá dài */
+}
+
+/* Tiêu đề nhóm (QUẢN LÝ CHUNG, QUẢN TRỊ...) */
+#sidebar ul p {
+    color: #d4a373; /* Màu vàng nhạt */
+    padding: 10px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 0;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+}
+
+/* Link Menu */
+#sidebar ul li a {
+    padding: 15px 20px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 4px solid transparent;
+}
+
+/* Hover */
+#sidebar ul li a:hover {
+    color: #fff;
+    background: var(--sidebar-hover-bg);
+}
+
+/* Active (Đang chọn) */
+#sidebar ul li.active > a {
+    color: #fff;
+    background: var(--sidebar-active-bg);
+    border-left: 4px solid var(--sidebar-border-active);
+    font-weight: 600;
+}
+
+/* Icon trong menu */
+#sidebar ul li a i {
+    width: 25px; /* Cố định chiều rộng để text thẳng hàng */
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* --- DROPDOWN SUBMENU --- */
+#sidebar ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 55px !important; /* Thụt đầu dòng cho menu con */
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#sidebar ul ul li.active > a {
+    background: rgba(255, 255, 255, 0.15); /* Màu active cho submenu nhạt hơn chút */
+    border-left-color: transparent; /* Bỏ viền trái cho submenu */
+    color: #d4a373; /* Text màu vàng */
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: calc(var(--sidebar-width) * -1); /* Mặc định ẩn trên mobile */
+        position: absolute; /* Đè lên nội dung */
+        height: 100%;
+    }
+    #sidebar.active {
+        margin-left: 0; /* Hiện ra khi active */
+        box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    }
+}

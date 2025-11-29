@@ -1,0 +1,237 @@
+/* --- 1. CẤU HÌNH CƠ BẢN --- */
+:root {
+    --primary-color: #4e73df;
+    --primary-dark: #224abe;
+    --bg-gray: #f3f4f6;
+    --sidebar-width: 250px;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-gray);
+    overflow: hidden; /* Chặn cuộn toàn trang */
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* --- 2. HEADER & NAVBAR POS --- */
+.navbar-pos {
+    background: #fff;
+    height: 70px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+    padding: 0 20px;
+}
+
+.brand-logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #6f42c1, #4e73df);
+    color: white;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(78, 115, 223, 0.3);
+}
+
+.brand-title {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: #858796;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.user-badge {
+    background: #f8f9fc;
+    padding: 5px 15px 5px 5px;
+    border-radius: 30px;
+    border: 1px solid #e3e6f0;
+    display: flex; align-items: center; gap: 10px;
+    transition: all 0.3s;
+}
+.user-badge:hover {
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+.user-avatar {
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* --- 3. LAYOUT POS (3 CỘT) --- */
+.main-container {
+    flex-grow: 1;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+    padding: 10px;
+    display: flex; /* [MỚI] Thêm display flex để layout con tính toán đúng */
+    flex-direction: column;
+}
+
+/* [MỚI] Class hỗ trợ row full height */
+.row-full-height {
+    height: 100%;
+    flex-grow: 1;
+}
+
+.col-full-height {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* [QUAN TRỌNG] Cho phép cột co lại để hiện scroll */
+}
+
+/* Wrapper có thanh cuộn riêng */
+.card-scroll-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    border: none;
+    overflow: hidden;
+    min-height: 0; /* [QUAN TRỌNG] Ép wrapper không bị tràn */
+}
+
+.card-header-sticky {
+    flex-shrink: 0;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    z-index: 10;
+}
+
+.card-body-scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #f8f9fa;
+    padding: 10px;
+    min-height: 0; /* [QUAN TRỌNG] Kích hoạt thanh cuộn */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+
+/* --- 4. CÁC THẺ (TABLE, PRODUCT) --- */
+
+/* Table Box */
+.table-box {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 90px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+}
+.table-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* Product Card */
+.product-card {
+    border: 1px solid #eee !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02) !important;
+    background: #fff;
+    cursor: pointer;
+}
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.img-container {
+    width: 100%; height: 140px;
+    overflow: hidden;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #fff;
+}
+.img-product {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    transition: transform 0.3s ease;
+}
+.product-card:hover .img-product { transform: scale(1.1); }
+
+.product-name-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+    margin-top: 8px; margin-bottom: 4px;
+}
+
+/* Search Input */
+.search-input-custom {
+    border-radius: 50px !important;
+    padding-left: 45px !important; height: 45px;
+    border: 1px solid #e3e6f0; background-color: #f8f9fc;
+    font-size: 0.95rem; transition: all 0.3s ease;
+}
+.search-input-custom:focus {
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(78, 115, 223, 0.15) !important;
+    border-color: var(--primary-color);
+}
+.search-icon {
+    position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+    color: #aaa; font-size: 1.1rem; pointer-events: none;
+}
+
+/* Category Pills */
+.category-scroll {
+    display: flex; flex-wrap: nowrap; overflow-x: auto;
+    padding: 5px 2px 15px 2px; gap: 10px;
+}
+.category-pill {
+    border: none !important; background-color: #fff;
+    color: #5a5c69; font-weight: 600; font-size: 0.85rem;
+    padding: 8px 20px !important; border-radius: 12px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: all 0.2s; white-space: nowrap;
+}
+.category-pill:hover {
+    transform: translateY(-2px);
+    color: var(--primary-color);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+}
+.category-pill.active {
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-dark)) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(78, 115, 223, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    body, html, .wrapper, #content, .main-container, .col-full-height, .card-scroll-wrapper, .card-body-scroll {
+        height: auto !important; overflow: visible !important;
+        min-height: unset; /* Reset lại trên mobile để cuộn trang bình thường */
+    }
+}
