@@ -1,0 +1,180 @@
+<div class="container mt-5 mb-5">
+  <!-- Nút chuyển đổi Layout -->
+  <div class="d-flex justify-content-end mb-4">
+    <button class="btn btn-outline-dark" (click)="toggleLayout()">
+      <i class="bi" [class.bi-grid]="!isGridLayout" [class.bi-list]="isGridLayout"></i>
+      {{ isGridLayout ? ' Chuyển sang Dạng Danh Sách' : ' Chuyển sang Dạng Lưới' }}
+    </button>
+  </div>
+
+  <div class="row g-4">
+    @for (p of productList; track p.id) {
+      
+      <!-- DESIGN 1: DẠNG LƯỚI (GRID) -->
+      @if (isGridLayout) {
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card product-card shadow-sm mx-auto">
+            
+            <!-- Carousel Hình ảnh -->
+            <div [id]="'carousel-' + p.id" class="carousel slide position-relative" data-bs-interval="false" (slid.bs.carousel)="onSlide($event, p)">
+              <span class="image-counter">{{p.currentIndex}}/{{p.selectedVariant.images.length}}</span>
+              
+              <div class="carousel-inner text-center">
+                @for (img of p.selectedVariant.images; track $index; let isFirst = $first) {
+                  <div class="carousel-item" [class.active]="isFirst">
+                    <img [src]="img" class="img-fluid product-image" alt="Product">
+                  </div>
+                }
+              </div>
+
+              <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carousel-' + p.id" data-bs-slide="prev">
+                <span class="custom-icon"><span class="carousel-control-prev-icon"></span></span>
+              </button>
+              <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel-' + p.id" data-bs-slide="next">
+                <span class="custom-icon"><span class="carousel-control-next-icon"></span></span>
+              </button>
+            </div>
+
+            <!-- Nội dung chi tiết -->
+            <div class="card-body card-body-custom">
+              <div class="d-flex align-items-center justify-content-between price-section mb-1">
+                <div>
+                  <span class="current-price">₱{{getPrice(p) | number}}</span>
+                  <span class="old-price">₱{{p.selectedVariant.oldPrice | number}}</span>
+                </div>
+                <span class="best-seller-badge">Best Seller</span>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <h3 class="product-title mb-0">{{p.name}}</h3>
+                <div class="rating-section d-flex align-items-center">
+                  <i class="bi bi-star-fill me-1"></i>
+                  <span>4.9</span>
+                </div>
+              </div>
+
+              <p class="product-description text-truncate">{{p.description}}</p>
+
+              <!-- Chọn màu (Dùng p.variants riêng của sản phẩm) -->
+              <div class="mb-4">
+                <h6 class="section-label">Color</h6>
+                <div class="color-options-grid">
+                  @for (v of p.variants; track v.colorName) {
+                    <div class="color-dot-wrapper" 
+                         [class.active]="p.selectedVariant === v" 
+                         [style.border-color]="v.colorCode" 
+                         (click)="selectColor(v, p)">
+                      <div class="color-dot" [style.background-color]="v.colorCode"></div>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Chọn Size -->
+              <div class="mb-4">
+                <h6 class="section-label">Size (cm)</h6>
+                <div class="size-options-grid">
+                  @for (s of p.selectedVariant.sizes; track s.size) {
+                    <button (click)="selectSize(s, p)" class="size-btn" 
+                            [class.size-btn-active]="p.selectedSizeObj.size === s.size" 
+                            [class.size-btn-inactive]="p.selectedSizeObj.size !== s.size">
+                      {{s.size}}
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <!-- Số lượng -->
+              <div class="mb-4">
+                <div class="d-flex align-items-center justify-content-center quantity-picker w-100">
+                  <button class="quantity-btn" (click)="updateQuantity(-1, p)">-</button>
+                  <span class="quantity-value mx-4">{{p.quantity}}</span>
+                  <button class="quantity-btn" (click)="updateQuantity(1, p)">+</button>
+                </div>
+              </div>
+
+              <div class="d-flex gap-2 align-items-center action-bar">
+                <div class="icon-btn-wrapper" (click)="onFavorite()">
+                    <i class="bi bi-heart action-icon"></i>
+                    <div class="notification-dot"></div>
+                </div>
+                <button class="btn buy-now-btn flex-grow-1" (click)="onBuyNow(p)">Buy Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      } @else {
+        <!-- DESIGN 2: DẠNG DANH SÁCH (LIST) -->
+        <div class="col-12 mb-3">
+          <div class="card product-list-card shadow-sm p-4">
+            <div class="row align-items-center">
+              <div class="col-md-3 text-center">
+                <img [src]="p.selectedVariant.images[0]" class="img-fluid list-view-image" alt="Product">
+              </div>
+              
+              <div class="col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span class="best-seller-badge">Best Seller</span>
+                  <div class="rating-section small"><i class="bi bi-star-fill"></i> 4.9</div>
+                </div>
+                <h3 class="product-title h4 mb-2">{{p.name}}</h3>
+                <p class="product-description mb-3" style="max-width: 90%;">{{p.description}}</p>
+                
+                <div class="d-flex flex-column gap-3">
+                   <div class="d-flex gap-4 align-items-center">
+                      <div class="price-section p-0">
+                        <span class="current-price">₱{{getPrice(p) | number}}</span>
+                      </div>
+                      <!-- Chọn màu trong List view -->
+                      <div class="color-options-grid mb-0">
+                        @for (v of p.variants; track v.colorName) {
+                          <div class="color-dot-wrapper" 
+                               [class.active]="p.selectedVariant === v" 
+                               [style.border-color]="v.colorCode" 
+                               (click)="selectColor(v, p)">
+                            <div class="color-dot small-dot" [style.background-color]="v.colorCode"></div>
+                          </div>
+                        }
+                      </div>
+                   </div>
+
+                   <div class="d-flex align-items-center gap-3">
+                      <span class="section-label mb-0 small">Kích cỡ:</span>
+                      <div class="size-options-grid mb-0">
+                        @for (s of p.selectedVariant.sizes; track s.size) {
+                          <button (click)="selectSize(s, p)" 
+                                  class="size-btn py-1 px-3" 
+                                  style="font-size: 0.8rem;"
+                                  [class.size-btn-active]="p.selectedSizeObj.size === s.size" 
+                                  [class.size-btn-inactive]="p.selectedSizeObj.size !== s.size">
+                            {{s.size}}
+                          </button>
+                        }
+                      </div>
+                   </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 border-start text-center">
+                <div class="mb-3">
+                  <h6 class="section-label small">Số lượng</h6>
+                  <div class="d-flex align-items-center justify-content-center quantity-picker">
+                    <button class="quantity-btn" (click)="updateQuantity(-1, p)">-</button>
+                    <span class="quantity-value px-3">{{p.quantity}}</span>
+                    <button class="quantity-btn" (click)="updateQuantity(1, p)">+</button>
+                  </div>
+                </div>
+                <button class="btn buy-now-btn w-100 mb-2" (click)="onBuyNow(p)">Buy Now</button>
+                <div class="text-muted small cursor-pointer" (click)="onFavorite()">
+                  <i class="bi bi-heart"></i> Thêm vào yêu thích
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+    }
+  </div>
+</div>

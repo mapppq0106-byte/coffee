@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <!-- Thanh hiển thị Tổng tiền (Header) -->
+  <div class="card shadow-sm p-4 mb-4" style="border-radius: 20px; background: #f8f9fa; border: none;">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-cart3 fs-2 me-3" style="color: #1a3c7a;"></i>
+        <h2 class="mb-0" style="font-weight: 700; color: #1a3c7a;">Giỏ hàng của bạn</h2>
+      </div>
+      
+      <div class="text-end">
+        <span class="text-muted d-block small">Tổng cộng thanh toán:</span>
+        <h2 class="text-danger mb-0" style="font-weight: 800;">
+          ₱{{ totalOrderPrice | number }}
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+    Truyền dữ liệu 'products' từ cha xuống con bằng [productList]
+    Và nhận lại sự kiện tính tổng tiền bằng (totalChange) 
+  -->
+  <app-name 
+    [productList]="products" 
+    (totalChange)="onTotalUpdated($event)">
+  </app-name>
+</div>

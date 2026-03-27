@@ -1,0 +1,105 @@
+/* --- CẤU HÌNH CHUNG --- */
+.container { font-family: 'Segoe UI', sans-serif; }
+.cursor-pointer { cursor: pointer; }
+
+/* --- DESIGN 1: GRID CARD (GIỮ NGUYÊN) --- */
+.product-card {
+    border-radius: 30px !important;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.08) !important;
+    border: none !important;
+    max-width: 420px;
+    margin: auto;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s ease;
+}
+.product-card:hover { transform: translateY(-5px); }
+
+/* --- CAROUSEL --- */
+.carousel-inner { padding: 30px; }
+.product-image { height: 280px; object-fit: contain; mix-blend-mode: multiply; }
+.carousel-control-prev, .carousel-control-next { width: 15%; opacity: 1 !important; }
+.custom-icon {
+    background: rgba(220, 220, 220, 0.8) !important;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.carousel-control-prev-icon::after { content: '❮'; color: #555; font-size: 1.1rem; font-weight: bold; }
+.carousel-control-next-icon::after { content: '❯'; color: #555; font-size: 1.1rem; font-weight: bold; }
+.carousel-control-prev-icon, .carousel-control-next-icon { background-image: none !important; }
+.image-counter {
+    position: absolute; top: 20px; right: 20px; z-index: 10;
+    background: rgba(0,0,0,0.7); color: #fff;
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: bold;
+}
+
+/* --- CHI TIẾT SẢN PHẨM --- */
+.card-body-custom { padding: 0 30px 30px; }
+.price-section .current-price { color: #d93025; font-weight: 700; font-size: 1.8rem; }
+.price-section .old-price { color: #a0a0a0; text-decoration: line-through; margin-left: 8px; }
+.best-seller-badge { background: #fef0db; color: #f1a843; padding: 6px 12px; border-radius: 20px; font: 600 0.8rem sans-serif; display: inline-block; }
+.product-title { font: 700 1.4rem sans-serif; color: #202124; margin-top: 10px; }
+.rating-section { color: #fbbc04; font-weight: 600; }
+.product-description { color: #5f6368; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px; }
+
+/* --- SELECTION (COLOR & SIZE) --- */
+.color-options-grid, .size-options-grid { display: flex; gap: 15px; margin-bottom: 25px; }
+.color-dot-wrapper { position: relative; cursor: pointer; }
+.color-dot { width: 35px; height: 35px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); }
+.small-dot { width: 25px; height: 25px; } /* Dùng cho List view */
+
+.color-dot-wrapper.active::after {
+    content: ''; position: absolute; inset: -5px;
+    border-radius: 50%; border: 2px solid; opacity: 0.5;
+}
+.size-btn { padding: 10px 20px; border-radius: 20px; font: 600 0.9rem sans-serif; border: none; cursor: pointer; }
+.size-btn-inactive { background: #e0e0e0; color: #202124; }
+.size-btn-active { background: #000; color: #fff; }
+
+/* --- QUANTITY & ACTIONS --- */
+.quantity-picker { border: 1px solid #e0e0e0; border-radius: 10px; background: #f8f9fa; display: inline-flex; }
+.quantity-btn { border: none; background: none; color: #70757a; padding: 5px 15px; font-size: 1.2rem; cursor: pointer; }
+.quantity-value { font-weight: 700; color: #202124; min-width: 30px; text-align: center; line-height: 40px; }
+
+.action-bar { border-top: 1px solid #e0e0e0; margin-top: 30px; padding-top: 20px; }
+.icon-btn-wrapper { position: relative; cursor: pointer; margin-right: 15px; }
+
+/* TRÁI TIM TO LÊN 2REM */
+.action-icon { font-size: 2rem; color: #000; transition: 0.2s; } 
+.action-icon:hover { color: #d93025; }
+
+.notification-dot {
+    position: absolute; top: 0; right: 0; width: 10px; height: 10px;
+    background: #d93025; border-radius: 50%; border: 2px solid #fff;
+}
+.buy-now-btn { background: #1a3c7a; color: #fff; font-weight: 700; border-radius: 15px; padding: 15px; border: none; cursor: pointer; transition: 0.2s; }
+.buy-now-btn:hover { background: #132d5e; }
+
+/* --- DESIGN 2: LIST LAYOUT BỔ SUNG --- */
+.product-list-card {
+    border-radius: 25px;
+    border: none;
+    background: #fff;
+    transition: 0.3s;
+}
+.product-list-card:hover {
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+}
+.list-view-image {
+    max-height: 180px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+/* Responsive cho List View */
+@media (max-width: 768px) {
+    .product-list-card .border-start {
+        border-start: none !important;
+        border-top: 1px solid #e0e0e0;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+}
