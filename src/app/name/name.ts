@@ -29,13 +29,12 @@ export class Name implements OnInit {
     }
     
     // 2. TÍNH TOÁN TỔNG TIỀN LẦN ĐẦU TIÊN
-    // Bọc trong setTimeout để tránh lỗi ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       this.emitTotal();
     });
   }
 
-  // Hàm tính tổng số tiền của tất cả sản phẩm và gửi ra App Component
+  // Hàm tính tổng số tiền của tất cả sản phẩm 
   emitTotal() {
     const total = this.productList.reduce((sum, product) => {
       return sum + (this.getPrice(product) * product.quantity);
@@ -54,7 +53,6 @@ export class Name implements OnInit {
     return product.selectedVariant.price + product.selectedSizeObj.priceAdjustment;
   }
 
-  // Cập nhật số trang của Carousel hình ảnh
   onSlide(event: any, product: any) {
     product.currentIndex = event.to + 1;
   }
